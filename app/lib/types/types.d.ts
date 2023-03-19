@@ -1,7 +1,24 @@
-export interface PageData {
+
+interface DocItem {
+    nid: number;
+    url: string;
     title: string;
-    slug: string;
-    nid: string;
-    body: string;
-    field_summary: string;
+}
+
+interface DocsData {
+    list: DocItem[];
+    last: string | null;
+    next: string | null;
+}
+
+interface DocsListProps {
+    type: string;
+    category: number | null;
+}
+
+interface SingleDocPageData {
+    title: string;
+    body: {
+        value: string;
+    };
 }

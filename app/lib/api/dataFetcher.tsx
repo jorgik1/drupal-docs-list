@@ -1,27 +1,33 @@
 const API_URL = process.env.API_URL
     ? process.env.API_URL
-    : 'https://www.drupal.org/api-d7/node.json'
+    : 'https://www.drupal.org/api-d7/node.json';
+const CORS_PROXY_URL = 'https://cors-anywhere.herokuapp.com';
 
 export default async function fetchAPI(
     params: URLSearchParams,
     options: RequestInit & { data?: any } = {}
-) {
+): Promise<any> {
     try {
-        const res = await fetch(`${API_URL}?${params.toString()}`, {
+        const res = await fetch(`${CORS_PROXY_URL}/${API_URL}?${params.toString()}`, {
             ...options,
             headers: {
                 ...options.headers,
                 Accept: 'application/json',
                 'Content-Type': 'application/json; charset=utf-8',
             },
-        })
-        return await res.json()
-    } catch (e: any) {
+        });
+
+        if (!res.ok) {
+            throw new Error(`Error fetching data: ${res.status} ${res.statusText}`);
+        }
+
+        return await res.json();
+    } catch (e: Error | any) {
         if (e.message === 'cancelled') {
             // Cancelled by browser
-            console.log('Request Cancelled by the Browser', e)
+            console.log('Request Cancelled by the Browser', e);
         } else {
-            console.error('Network Error, CORS or timeout.')
+            console.error('Network Error, CORS or timeout.');
         }
     }
 }

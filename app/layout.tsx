@@ -1,19 +1,19 @@
 import './globals.css'
 import React from "react";
+import AppThemeProvider from "@/app/theme-provider";
 
-export const metadata = {
-  title: 'Drupal docs app',
-  description: 'Provides simplified and accessible Drupal docs',
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+export default function RootLayout({children}: { children: React.ReactNode }) {
+    return (
+        <html lang="en">
+        <meta charSet="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content="Provides simplified and accessible Drupal docs"/>
+        <title>Drupal docs app</title>
+        <body>
+          <AppThemeProvider>
+            {children}
+          </AppThemeProvider>
+        </body>
+        </html>
+    )
 }
