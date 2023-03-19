@@ -2,7 +2,13 @@ import React from 'react';
 import ThemeSwitcher from '@/app/components/ThemeSwitcher';
 import Link from 'next/link';
 
-const Navigation = () => {
+interface NavigationProps {
+    searchTerm: string;
+    handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const Navigation: React.FC<NavigationProps> = ({searchTerm, handleSearchChange}) => {
+
     return (
         <div className="navbar bg-base-100">
             <div className="navbar-start">
@@ -25,7 +31,13 @@ const Navigation = () => {
             </div>
             <div className="navbar-center">
                 <div className="form-control">
-                    <input type="text" placeholder="Search" className="input input-bordered"/>
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        className="input input-bordered"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
                 </div>
             </div>
             <div className="navbar-end">

@@ -1,12 +1,14 @@
 "use client";
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import useFetch from '@/app/hooks/useFetch';
 import Loading from '@/app/document/loading';
 import Link from "next/link";
+import SearchContext from "@/app/context/SearchContext";
 
-const DocsList: React.FC<DocsListProps> = ({ type, category }) => {
+const DocsList: React.FC<DocsListProps> = ({type, category}) => {
     const [page, setPage] = useState(0);
     const [lastPage, setLastPage] = useState(0);
+
     const initialUrlParams = new URLSearchParams();
     initialUrlParams.append("type", type);
     initialUrlParams.append("limit", "10");
@@ -19,8 +21,8 @@ const DocsList: React.FC<DocsListProps> = ({ type, category }) => {
     initialUrlParams.append('limit', '10');
     initialUrlParams.append('page', page.toString());
 
-    const { data, loading, error } = useFetch(initialUrlParams);
-
+    const {data, loading, error} = useFetch(initialUrlParams);
+    const { searchTerm } = useContext(SearchContext);
     useEffect(() => {
         if (data && data.last) {
             const lastPageUrl = new URL(data.last);
@@ -30,7 +32,7 @@ const DocsList: React.FC<DocsListProps> = ({ type, category }) => {
     }, [data]);
     const renderContent = () => {
         if (loading) {
-            return <Loading />;
+            return <Loading/>;
         }
         if (error) {
             return <p>Error: {error}</p>;
@@ -38,6 +40,10 @@ const DocsList: React.FC<DocsListProps> = ({ type, category }) => {
         if (!data) {
             return <p>No items found</p>;
         }
+
+        const filteredItems = data.list.filter((item) => {
+            return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+        });
         return (
             <>
                 <div className="overflow-x-auto w-full">
@@ -49,7 +55,7 @@ const DocsList: React.FC<DocsListProps> = ({ type, category }) => {
                         </tr>
                         </thead>
                         <tbody>
-                        {data.list.map((doc) => (
+                        {filteredItems.map((doc) => (
                             <tr key={doc.nid} className="hover">
                                 <th>{doc.nid}</th>
                                 <td>
