@@ -42,8 +42,8 @@ const DocItemsPage: React.FC<DocItemsPageProps> = ({type, category}) => {
         return (
             <>
                 <DocItem filteredItems={filteredItems}/>
-                <Pagination onClick={() => setPage(page > 0 ? page - 1 : 0)} page={page}
-                            onClick1={() => setPage(page + 1)} lastPage={lastPage}/>
+                <Pagination onClickPrev={() => setPage(page > 0 ? page - 1 : 0)} page={page}
+                            onClickNext={() => setPage(page + 1)} lastPage={lastPage}/>
             </>
         );
     };
