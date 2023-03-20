@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface FacetsProps {
+interface FacetProps {
     id: number;
     name: string;
     onCategoryClick: (id: number) => void;
 }
 
-const Facets: React.FC<FacetsProps> = ({ id, name, onCategoryClick }) => {
+const Facet: React.FC<FacetProps> = ({ id, name, onCategoryClick }) => {
     const handleClick = () => {
         onCategoryClick(id);
     };
@@ -20,4 +20,4 @@ const Facets: React.FC<FacetsProps> = ({ id, name, onCategoryClick }) => {
     );
 };
 
-export default Facets;
+export default Facet;
