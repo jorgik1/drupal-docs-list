@@ -1,4 +1,4 @@
-import Link from "next/link";
+import DocItem from "./DocItem";
 import React from "react";
 
 interface DocItemsProps{
@@ -17,14 +17,7 @@ const DocItems = ({filteredItems}: DocItemsProps) => {
                 </thead>
                 <tbody>
                 {filteredItems.map((doc) => (
-                    <tr key={doc.nid} className="hover">
-                        <th>{doc.nid}</th>
-                        <td>
-                            <Link href={`/document/${doc.nid}`} className="text hover:text-blue-800">
-                                {doc.title}
-                            </Link>
-                        </td>
-                    </tr>
+                    <DocItem key={doc.nid} nid={doc.nid} title={doc.title} body={doc.body} url={doc.url}/>
                 ))}
                 </tbody>
             </table>
