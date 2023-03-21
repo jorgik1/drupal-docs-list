@@ -1,4 +1,3 @@
-"use client";
 import React, {useContext, useEffect, useState} from 'react';
 import {requestParams, useFetch} from '@/app/hooks/useFetch';
 import Loading from '@/app/document/loading';

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import fetchAPI from '@/app/lib/api/dataFetcher';
 import prepareHTML from "@/app/utils/prepareHTML";
 
 const usePageFetch = (
@@ -15,15 +14,24 @@ const usePageFetch = (
 
         const urlParams = new URLSearchParams();
         urlParams.append('nid', nid);
-
-        fetchAPI(urlParams)
+        const DOC_LIST_URL = '/api/document';
+        const fetcher = async (urlParams: URLSearchParams) => {
+            const data = await fetch(`${DOC_LIST_URL}?${urlParams.toString()}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            return await data.json();
+        };
+        fetcher(urlParams)
             .then((fetchedData: any) => {
                 const pageData: DocItem = {
-                    nid: fetchedData.list[0].nid,
-                    url: fetchedData.list[0].url,
-                    title: fetchedData.list[0].title,
+                    nid: fetchedData.data.list[0].nid,
+                    url: fetchedData.data.list[0].url,
+                    title: fetchedData.data.list[0].title,
                     body: {
-                        value: prepareHTML(fetchedData.list[0].body.value),
+                        value: prepareHTML(fetchedData.data.list[0].body.value),
                     },
                 };
                 setData(pageData);

@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
+    reactStrictMode: true,
+
+    pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
+    experimental: {
+        appDir: true,
+    },
 }
 
 module.exports = nextConfig

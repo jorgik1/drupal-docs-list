@@ -1,26 +1,27 @@
+import {NextResponse} from 'next/server';
+
 const API_URL = process.env.API_URL
     ? process.env.API_URL
     : 'https://www.drupal.org/api-d7/node.json';
-
-export default async function fetchAPI(
-    params: URLSearchParams,
-    options: RequestInit & { data?: any } = {}
-): Promise<any> {
+export async function GET(request: Request) {
+    const params = request.url.split('?')[1];
     try {
         const res = await fetch(`${API_URL}?${params.toString()}`, {
-            ...options,
             headers: {
-                ...options.headers,
                 Accept: 'application/json',
-                'Content-Type': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json',
             },
         });
 
         if (!res.ok) {
-            throw new Error(`Error fetching data: ${res.status} ${res.statusText}`);
+            return NextResponse.error();
         }
 
-        return await res.json();
+        const data = await res.json().catch((e: Error) => {
+            console.error(e);
+            return NextResponse.error();
+        });
+        return NextResponse.json({ data });
     } catch (e: Error | any) {
         if (e.message === 'cancelled') {
             // Cancelled by browser

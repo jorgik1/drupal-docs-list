@@ -1,5 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import fetchAPI from '@/app/lib/api/dataFetcher';
+import {useCallback, useEffect, useState} from "react";
 
 export const requestParams = (type: string, page: number, category: number | null) => {
     const initialUrlParams = new URLSearchParams();
@@ -27,12 +26,23 @@ export const useFetch = (
     });
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const DOC_LIST_URL = '/api/document';
+    const fetcher = async (urlParams: URLSearchParams) => {
+        const data = await fetch(`${DOC_LIST_URL}?${urlParams.toString()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return await data.json();
+    }
+
     const getDocsData = useCallback((): void => {
         setLoading(true);
         setError(null);
-        fetchAPI(urlParams)
-            .then((data: DocsData) => {
-                setData(data);
+        fetcher(urlParams)
+            .then((data) => {
+                setData(data.data);
             })
             .catch((error: Error) => {
                 setError(error.message);

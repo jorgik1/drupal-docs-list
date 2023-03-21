@@ -1,4 +1,4 @@
-// searchContext.ts
+"use client";
 import { createContext, Context} from 'react';
 
 interface SearchContextProps {
