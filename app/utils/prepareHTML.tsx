@@ -15,6 +15,15 @@ const prepareHTML = (html: string): string => {
         }
     });
 
+    doc.querySelectorAll('a[href]').forEach((a) => {
+        const href = a.getAttribute('href');
+        if (href && !href.startsWith('http')) {
+            a.setAttribute('href', `https://www.drupal.org${href}`);
+        }
+        a.setAttribute('target', '_blank');
+        a.setAttribute('class', 'text-blue-600 hover:text-blue-800');
+    });
+
     // Wrap <pre> tags with a div that has a specific class for styling
     doc.querySelectorAll('pre').forEach((pre) => {
         const wrapper = doc.createElement('div');
