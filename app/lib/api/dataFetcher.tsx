@@ -1,14 +1,13 @@
 const API_URL = process.env.API_URL
     ? process.env.API_URL
     : 'https://www.drupal.org/api-d7/node.json';
-const CORS_PROXY_URL = 'https://cors-anywhere.herokuapp.com';
 
 export default async function fetchAPI(
     params: URLSearchParams,
     options: RequestInit & { data?: any } = {}
 ): Promise<any> {
     try {
-        const res = await fetch(`${CORS_PROXY_URL}/${API_URL}?${params.toString()}`, {
+        const res = await fetch(`${API_URL}?${params.toString()}`, {
             ...options,
             headers: {
                 ...options.headers,
