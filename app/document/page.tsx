@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import DocItemsPage from "@/app/components/Document/DocItemsPage";
 import Facets from "@/app/components/Facets/Facets";
 import categories from "@/app/components/Facets/categories";
+import Script from "next/script";
 
 const Page: React.FC = () => {
     const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
@@ -25,6 +26,10 @@ const Page: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <Script
+                src={"https://cdn.jsdelivr.net/gh/EniasCailliau/chatbot@main/index.js"}
+                id="https://www.steamship.com/embed/chat?userHandle=yuriy-stenin&workspaceHandle=ask-my-course-b15&instanceHandle=ask-my-course-b15"
+            />
         </>
     );
 };
