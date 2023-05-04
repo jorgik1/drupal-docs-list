@@ -28,7 +28,7 @@ const Page: React.FC = () => {
             </div>
             <Script
                 src={"https://cdn.jsdelivr.net/gh/EniasCailliau/chatbot@main/index.js"}
-                id="https://www.steamship.com/embed/chat?userHandle=yuriy-stenin&workspaceHandle=ask-my-course-b15&instanceHandle=ask-my-course-b15"
+                id="https://www.steamship.com/embed/chat?userHandle=yuriy-stenin&workspaceHandle=ask-my-book&instanceHandle=ask-my-book"
             />
         </>
     );
