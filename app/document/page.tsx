@@ -27,7 +27,7 @@ const Page: React.FC = () => {
             </div>
             <Script id="script" strategy="lazyOnload" src="https://openchat.so/chat.js"/>
             <Script id="script-chat" strategy="beforeInteractive"
-                onload={() => {
+                onReady={() => {
                      document.addEventListener('DOMContentLoaded', function() {
                             var chatConfig = {
                                 token: "hsDOwOBBfl1Ars4BZM1m",
