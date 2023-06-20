@@ -25,7 +25,7 @@ const Page: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <Script id="script" strategy="afterInteractive" src="https://openchat.so/chat.js"/>
+            <Script id="script" strategy="lazyOnload" src="https://openchat.so/chat.js"/>
             <Script id="script-chat" strategy="afterInteractive"
                 dangerouslySetInnerHTML={{
                 __html: `
