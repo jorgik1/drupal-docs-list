@@ -29,10 +29,13 @@ const Page: React.FC = () => {
             <Script id="script-chat" strategy="beforeInteractive"
                 onReady={() => {
                      document.addEventListener('DOMContentLoaded', function() {
+                        const initializeChatWidget = window.initializeChatWidget || {};
                             var chatConfig = {
                                 token: "hsDOwOBBfl1Ars4BZM1m",
                             };
+                            if (initializeChatWidget && initializeChatWidget instanceof Function) {
                                 initializeChatWidget(chatConfig);
+                            }
                             });
                 }}
             />
