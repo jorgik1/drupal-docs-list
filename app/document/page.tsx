@@ -7,9 +7,8 @@ import Script from "next/script";
 
 const Page: React.FC = () => {
     const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
-    const handleCategoryClick = (id: number) => {
-        setSelectedCategoryId(id);
-    };
+
+    const handleCategoryClick = (id: number) => setSelectedCategoryId(id);
 
     return (
         <>
@@ -26,9 +25,16 @@ const Page: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <Script
-                src={"https://cdn.jsdelivr.net/gh/EniasCailliau/chatbot@main/index.js"}
-                id="https://www.steamship.com/embed/chat?userHandle=yuriy-stenin&workspaceHandle=ask-my-book&instanceHandle=ask-my-book"
+            <Script src="https://openchat.so/chat.js"
+            dangerouslySetInnerHTML={{
+                __html: `
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var chatConfig = {
+                        token: "hsDOwOBBfl1Ars4BZM1m",
+                        };
+                        initializeChatWidget(chatConfig);
+                    });`
+                }}
             />
         </>
     );
