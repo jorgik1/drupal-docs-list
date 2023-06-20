@@ -26,16 +26,16 @@ const Page: React.FC = () => {
                 </div>
             </div>
             <Script id="script" strategy="afterInteractive" src="https://openchat.so/chat.js"/>
-            <Script id="script"
-            dangerouslySetInnerHTML={{
+            <Script id="script-chat" strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
                 __html: `
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var chatConfig = {
-                        token: "hsDOwOBBfl1Ars4BZM1m",
-                        };
-                        initializeChatWidget(chatConfig);
-                    });`
-                }}
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var chatConfig = {
+                            token: "hsDOwOBBfl1Ars4BZM1m",
+                            };
+                            initializeChatWidget(chatConfig);
+                            });`
+                        }}
             />
         </>
     );
