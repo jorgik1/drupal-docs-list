@@ -50,11 +50,11 @@ export const useFetch = (
             .finally(() => {
                 setLoading(false);
             });
-    }, [urlParams.toString()]);
+    }, [urlParams]);
 
     useEffect(() => {
         getDocsData();
-    }, [getDocsData]);
+    }, [getDocsData, urlParams]);
 
     return { data, loading, error };
 };

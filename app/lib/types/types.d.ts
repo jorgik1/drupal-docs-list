@@ -30,3 +30,7 @@ interface Category {
     children?: Category[];
 }
 
+interface Window {
+    initializeChatWidget?: any;
+}
+

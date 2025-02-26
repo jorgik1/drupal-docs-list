@@ -1,9 +1,21 @@
+'use client';
 import createDOMPurify from 'dompurify';
 
+// Initialize DOMPurify only on client side
+let DOMPurify: any = null;
 
-const DOMPurify = createDOMPurify();
-
+// Server-side compatible HTML preparation
 const prepareHTML = (html: string): string => {
+    // Check if running in browser
+    if (typeof window === 'undefined') {
+        return html; // Return original content on server
+    }
+    
+    // Lazy initialize DOMPurify
+    if (!DOMPurify) {
+        DOMPurify = createDOMPurify(window);
+    }
+    
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
 

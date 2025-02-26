@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+import React from 'react';
+import { useTheme } from 'next-themes';
 
 const ThemeSwitcher = () => {
-    const [theme, setTheme] = useState('emerald');
-
-    useEffect(() => {
-        const root = window.document.documentElement;
-        const initialTheme = root.getAttribute('data-theme');
-        setTheme(initialTheme);
-    }, [theme]);
+    const { theme, setTheme } = useTheme();
 
     const switchTheme = () => {
-        const newTheme = theme === 'emerald' ? 'dracula' : 'emerald';
-        setTheme(newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
+        setTheme(theme === 'emerald' ? 'dracula' : 'emerald');
     };
 
     return (

@@ -12,12 +12,14 @@ export default function MainLayout({children}: {
         setSearchTerm(event.target.value);
     };
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
             <SearchContext.Provider value={{searchTerm, setSearchTerm}}>
                 <Navigation searchTerm={searchTerm} handleSearchChange={handleSearchChange}/>
-                {children}
+                <main className="flex-grow">
+                    {children}
+                </main>
                 <Footer/>
             </SearchContext.Provider>
-        </>
+        </div>
     );
 }
