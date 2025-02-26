@@ -18,7 +18,7 @@ const Navigation: React.FC<NavigationProps> = ({searchTerm, handleSearchChange})
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
         };
-        
+
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -30,9 +30,9 @@ const Navigation: React.FC<NavigationProps> = ({searchTerm, handleSearchChange})
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
                         <div className="w-8 h-8 relative">
-                            <Image 
-                                src="/drupal-icon.png" 
-                                alt="Drupal Logo" 
+                            <Image
+                                src="/drupal-icon.png"
+                                alt="Drupal Logo"
                                 width={32}
                                 height={32}
                             />
@@ -42,8 +42,8 @@ const Navigation: React.FC<NavigationProps> = ({searchTerm, handleSearchChange})
 
                     {/* Mobile menu button - only visible on mobile */}
                     <div className="dropdown dropdown-hover md:hidden">
-                        <label 
-                            tabIndex={0} 
+                        <label
+                            tabIndex={0}
                             className="btn btn-ghost m-1 btn-circle"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
@@ -75,7 +75,7 @@ const Navigation: React.FC<NavigationProps> = ({searchTerm, handleSearchChange})
                             </li>
                         </ul>
                     </div>
-                    
+
                     {/* Desktop menu - only visible on desktop */}
                     <div className="hidden md:flex md:ml-6">
                         <ul className="menu menu-horizontal px-1">
@@ -113,17 +113,17 @@ const Navigation: React.FC<NavigationProps> = ({searchTerm, handleSearchChange})
                                 onFocus={() => setIsSearchFocused(true)}
                                 onBlur={() => setIsSearchFocused(false)}
                             />
-                            <svg 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                className="absolute left-3 top-3 h-5 w-5 text-gray-400" 
-                                fill="none" 
-                                viewBox="0 0 24 24" 
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="absolute left-3 top-3 h-5 w-5 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
                                 stroke="currentColor"
                             >
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                             {searchTerm && (
-                                <button 
+                                <button
                                     className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
                                     onClick={() => handleSearchChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)}
                                 >
