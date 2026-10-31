@@ -6,9 +6,9 @@ let DOMPurify: any = null;
 
 // Server-side compatible HTML preparation
 const prepareHTML = (html: string): string => {
-    // Check if running in browser
+    // DOMPurify needs a DOM; never return unsanitized HTML on the server
     if (typeof window === 'undefined') {
-        return html; // Return original content on server
+        return '';
     }
     
     // Lazy initialize DOMPurify
@@ -44,7 +44,19 @@ const prepareHTML = (html: string): string => {
         wrapper.appendChild(pre);
     });
 
-    return doc.documentElement.innerHTML;
+    // Sanitize after the changes above so they cannot reintroduce unsafe markup.
+    // ADD_ATTR keeps target="_blank", which DOMPurify strips by default.
+    const clean: HTMLElement = DOMPurify.sanitize(doc.body.innerHTML, {ADD_ATTR: ['target'], RETURN_DOM: true});
+
+    // Give headings the IDs the table of contents links to. This runs after sanitizing
+    // because DOMPurify strips IDs that clash with document properties, e.g. id="links".
+    clean.querySelectorAll('h2, h3').forEach((heading, index) => {
+        if (!heading.id) {
+            heading.id = `heading-${index}`;
+        }
+    });
+
+    return clean.innerHTML;
 };
 
 export default prepareHTML;
