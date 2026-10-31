@@ -6,9 +6,9 @@ let DOMPurify: any = null;
 
 // Server-side compatible HTML preparation
 const prepareHTML = (html: string): string => {
-    // Check if running in browser
+    // DOMPurify needs a DOM; never return unsanitized HTML on the server
     if (typeof window === 'undefined') {
-        return html; // Return original content on server
+        return '';
     }
     
     // Lazy initialize DOMPurify
@@ -44,7 +44,9 @@ const prepareHTML = (html: string): string => {
         wrapper.appendChild(pre);
     });
 
-    return doc.documentElement.innerHTML;
+    // Sanitize last so nothing added above can reintroduce unsafe markup.
+    // ADD_ATTR keeps target="_blank", which DOMPurify strips by default.
+    return DOMPurify.sanitize(doc.body.innerHTML, {ADD_ATTR: ['target']});
 };
 
 export default prepareHTML;

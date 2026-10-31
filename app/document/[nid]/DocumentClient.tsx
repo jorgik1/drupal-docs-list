@@ -4,6 +4,7 @@ import { useDocument } from '@/app/hooks/useDocument';
 import Loading from "@/app/document/loading";
 import SearchContext from "@/app/context/SearchContext";
 import filterContent from "@/app/utils/filterContent";
+import prepareHTML from "@/app/utils/prepareHTML";
 import Link from 'next/link';
 
 interface DocumentClientProps {
@@ -119,9 +120,9 @@ const DocumentClient: React.FC<DocumentClientProps> = ({ nid }) => {
     }
 
     // Filter the content if there's a search term
-    const filteredContent = searchTerm
-        ? filterContent(data.body.value, searchTerm)
-        : data.body.value;
+    const filteredContent = prepareHTML(
+        searchTerm ? filterContent(data.body.value, searchTerm) : data.body.value
+    );
 
     return (
         <>
