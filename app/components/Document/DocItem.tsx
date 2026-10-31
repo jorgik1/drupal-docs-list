@@ -1,6 +1,9 @@
 import React from "react";
 import Link from "next/link";
 
+// DOMParser documents are inert, so untrusted HTML cannot run handlers or load resources here
+const getText = (html: string) => new DOMParser().parseFromString(html, 'text/html').body.textContent || '';
+
 const DocItem: React.FC<DocItem> = ({ nid, title, body }) => {
     // Generate a summary from the body text if available
     const getSummary = () => {
@@ -8,11 +11,8 @@ const DocItem: React.FC<DocItem> = ({ nid, title, body }) => {
         
         if (typeof document === 'undefined') return ""; // Server-side safety
         
-        // Create temporary element to parse HTML and extract text
-        const tempElement = document.createElement('div');
-        tempElement.innerHTML = body.value;
-        const textContent = tempElement.textContent || tempElement.innerText;
-        
+        const textContent = getText(body.value);
+
         // Get first 120 characters as summary
         return textContent.substring(0, 120) + (textContent.length > 120 ? '...' : '');
     };
@@ -23,10 +23,8 @@ const DocItem: React.FC<DocItem> = ({ nid, title, body }) => {
         
         if (typeof document === 'undefined') return "1 min read"; // Server-side safety
         
-        const tempElement = document.createElement('div');
-        tempElement.innerHTML = body.value;
-        const textContent = tempElement.textContent || tempElement.innerText;
-        
+        const textContent = getText(body.value);
+
         const wordCount = textContent.split(/\s+/).length;
         const minutes = Math.max(1, Math.round(wordCount / 200));
         
