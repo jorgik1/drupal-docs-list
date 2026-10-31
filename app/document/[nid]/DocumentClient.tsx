@@ -29,30 +29,19 @@ const DocumentClient: React.FC<DocumentClientProps> = ({ nid }) => {
     useEffect(() => {
         if (!isBrowser || !data) return;
         
-        // Using browser APIs to parse HTML
+        // Parse the prepared HTML so these IDs match the rendered headings
         const parser = new DOMParser();
-        const htmlDoc = parser.parseFromString(data.body.value, 'text/html');
-        
+        const htmlDoc = parser.parseFromString(prepareHTML(data.body.value), 'text/html');
+
         // Find all headings (h2, h3)
         const headingElements = htmlDoc.querySelectorAll('h2, h3');
-        
-        const extractedHeadings = Array.from(headingElements).map((heading, index) => {
-            // If heading doesn't have ID, generate one
-            const id = heading.id || `heading-${index}`;
-            
-            // Add ID to original heading if it doesn't have one
-            if (!heading.id) {
-                heading.id = id;
-            }
-            
-            return {
-                id,
-                text: heading.textContent || '',
-                level: heading.tagName.toLowerCase()
-            };
-        });
-        
-        // Update the filtered content with the modified HTML that includes heading IDs
+
+        const extractedHeadings = Array.from(headingElements).map((heading) => ({
+            id: heading.id,
+            text: heading.textContent || '',
+            level: heading.tagName.toLowerCase()
+        }));
+
         setHeadings(extractedHeadings);
     }, [data, isBrowser]);
 

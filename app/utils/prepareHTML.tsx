@@ -44,9 +44,19 @@ const prepareHTML = (html: string): string => {
         wrapper.appendChild(pre);
     });
 
-    // Sanitize last so nothing added above can reintroduce unsafe markup.
+    // Sanitize after the changes above so they cannot reintroduce unsafe markup.
     // ADD_ATTR keeps target="_blank", which DOMPurify strips by default.
-    return DOMPurify.sanitize(doc.body.innerHTML, {ADD_ATTR: ['target']});
+    const clean: HTMLElement = DOMPurify.sanitize(doc.body.innerHTML, {ADD_ATTR: ['target'], RETURN_DOM: true});
+
+    // Give headings the IDs the table of contents links to. This runs after sanitizing
+    // because DOMPurify strips IDs that clash with document properties, e.g. id="links".
+    clean.querySelectorAll('h2, h3').forEach((heading, index) => {
+        if (!heading.id) {
+            heading.id = `heading-${index}`;
+        }
+    });
+
+    return clean.innerHTML;
 };
 
 export default prepareHTML;
